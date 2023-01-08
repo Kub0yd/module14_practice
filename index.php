@@ -4,12 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php echo "<link rel='stylesheet' href='./index.css'>"; ?>
     <link rel="stylesheet" href="./index.css" />
-    <title>&#x1F34C;Экзотические фрукты</title>
+    <link rel="icon" href="./images/icon.png" type="image/png">
+    <title>Grand SPA Traditonal</title>
   </head>
   <body>
     <main>
-    Test
+    <section class="main">
+      <img src="./images/main.png">
+    </section>
+    <section class="discount">
+      <img src="./images/discount_pic.png">
+      <a href="./login.php" class="login-now">Войти сейчас</a>
+    </section>
+    <section class="spa">
+      <img src="./images/spa_pic.png">
+    </section>
     </main>
 <?php
 
@@ -19,7 +30,9 @@ $password = $_POST['password'] ?? null;
 // зададим книгу паролей
 $users = [
      'admin' => ['id' => '1', 'password' => '132432'],
+     'test' => ['id' => '1', 'password' => '123'],
 ];
+
 
 
 if (null !== $username || null !== $password) {
@@ -32,11 +45,13 @@ if (null !== $username || null !== $password) {
         
    	 // Пишем в сессию информацию о том, что мы авторизовались:
         $_SESSION['auth'] = true; 
-        
         // Пишем в сессию логин и id пользователя
         $_SESSION['id'] = $users['admin']['id']; 
-        $_SESSION['login'] = $username; 
-
+        $_SESSION['login'] = $username;
+        if (!isset($_COOKIE['session_start'])){
+          setcookie('session_start', time(),time()+86400);
+        }
+        
     }
 }
 
@@ -44,8 +59,10 @@ if (null !== $username || null !== $password) {
 $auth = $_SESSION['auth'] ?? null;
 
 // если авторизованы
-if ($auth) {
+if ($auth)
+{
 ?>
+
 <button>Показать форму</button>
 
 <div class="popup">

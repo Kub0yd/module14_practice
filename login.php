@@ -3,18 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php echo "<link rel='stylesheet' href='./index.css'>"; ?>
     <link rel="stylesheet" href="./index.css" />
-    <title>&#x1F34C;Экзотические фрукты</title>
+    <title>&#x1F34C;login</title>
   </head>
 
   <body>
     <main>
         <button>Показать форму</button>
 
-        <div class="popup">
+        <div class="popup popup_open">
           <div class="popup__container">
             <div class="popup__wrapper">
-              <div id="blablabla">
+              <div class='open' id="blablabla">
                 <form role="form" action="./index.php" autocomplete="off" method="POST">
                   <label>Логин</label>
                   <input type="text" name="login">
