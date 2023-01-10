@@ -23,7 +23,7 @@ if (null !== $username || null !== $password) {
         $_SESSION['login'] = $username;
         //выставляем время первого входа на сайт
         if (!isset($_COOKIE['session_start'])){
-          setcookie('session_start', time(),time()+100000);
+          setcookie('session_start', intVal(microtime(true)*1000),time()+100000);
         }
         
     }
@@ -51,6 +51,13 @@ $auth = $_SESSION['auth'] ?? null;
     <form method="post" action="./index.php">
       <input type="submit" name="exit" label="Выйти"></input>
     </form>
+    <div class="timer">
+      <div class="timer_items">
+        <div class="timer_item timer_hours">00</div>
+        <div class="timer_item timer_minutes">00</div>
+        <div class="timer_item timer_seconds">00</div>
+      </div>
+      </div>
     <?php   
         }
     ?>

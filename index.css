@@ -90,3 +90,16 @@ html {
     color: #e8dcca;
     z-index: 1;
  }
+ /* Таймер */
+ .timer__items {
+  display: flex;
+  font-size: 48px;
+}
+ .timer__item {
+  position: relative;
+  min-width: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-bottom: 15px;
+  text-align: center;
+}
