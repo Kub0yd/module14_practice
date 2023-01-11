@@ -10,7 +10,7 @@
 
   <body>
     <div id="bg"></div>
-    <form role="form" action="./index.php" autocomplete="off" method="POST">
+    <form role="form"  autocomplete="off" method="POST">
       <div class="form-field">
         <input name="login" type="login" placeholder="Username" required/>
       </div>
@@ -18,7 +18,7 @@
         <input name="password" type="password" placeholder="Password" required/>                         
       </div>
       <div class="form-field">
-        <button class="btn" type="submit">Log in</button>
+        <button class="btn" type="submit" name="submit">Log in</button>
       </div>
     </form>
 
@@ -26,3 +26,12 @@
     <script src="./index.js"></script>
   </body>
 </html>
+<?php 
+if (isset($_POST['submit'])) {
+  if ($_POST['login'] == "Test") {
+    header("Location: ./index.php");
+  }else{
+    echo '<p>ОШибка</p>';
+  }
+}
+?>
