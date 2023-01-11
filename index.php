@@ -47,26 +47,20 @@ $auth = $_SESSION['auth'] ?? null;
     <main>
     <?php
         if($auth){
-    ?>
-    <form method="post" action="./index.php">
-      <input type="submit" name="exit" label="Выйти"></input>
-    </form>
-    <div class="timer">
-      <div class="timer_items">
-        <div class="timer_item timer_hours">00</div>
-        <div class="timer_item timer_minutes">00</div>
-        <div class="timer_item timer_seconds">00</div>
-      </div>
-      </div>
-    <?php   
+      ?>
+
+      <form method="post" action="./index.php">
+        <input type="submit" name="exit" label="Выйти"></input>
+      </form>
+      
+      <?php   
         }
-    ?>
+      ?>
     <section class="main">
       <img src="./images/main.png">
     </section>
     <section class="discount">
       <img src="./images/discount_pic.png">
-
       <?php
         if(!$auth){
       ?>
@@ -76,6 +70,42 @@ $auth = $_SESSION['auth'] ?? null;
       <?php   
         }
       ?>
+      <?php
+        if($auth){
+    ?>
+    <div class="timer">
+      <p>Специалльное предложение действует:</p>
+      <div class="timer_items">
+        <div class="timer_item timer_hours">00</div>
+        <div class="timer_item timer_minutes">00</div>
+        <div class="timer_item timer_seconds">00</div>
+      </div>
+    </div>
+    <?php   
+        }
+    ?>
+      <div class="services">
+        <div class="inrow">
+          <div class="service service1">
+            <h3>Классический массаж</h3>
+            <img class="img sevice-img" src="./images/1.jpg">
+            <p class="price">200$</p>
+          </div>
+          <div class="service service2">
+            <h3>Улучшение кожи</h3>
+            <img class="img sevice-img" src="./images/6.jpg">
+            <p class="price">200$</p>
+          </div>
+          <div class="service service3">
+            <h3>Традиционный массаж</h3>
+            <img class="img sevice-img" src="./images/ckl.jpg">
+            <p class="price">200$</p>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+    <section class="services">
       
     </section>
     <section class="spa">

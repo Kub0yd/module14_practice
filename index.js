@@ -1,15 +1,8 @@
-const button = document.querySelector('button');
-const form = document.querySelector('#blablabla');
-const popup = document.querySelector('.popup');
 
 const hours = document.querySelector('.timer_hours');
 const minuts = document.querySelector('.timer_minutes');
 const seconds = document.querySelector('.timer_seconds');
 
-// button.addEventListener('click', () => {
-//   form.classList.add('open');
-//   popup.classList.add('popup_open');
-// });
 let cookiesObj = {};                                            //создаем пустой объект для будущих данных куки
 let cookies = document.cookie.split(/;/);                       //разделяем строку с полученными из документа куки и добавляем в массив
 for (let i = 0, lenght = cookies.length; i < lenght; i++){      
@@ -31,7 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(second);
         
     }
+
+    
     timer();
     
-    timerId = setInterval(timer(), 1000);
+    timerId = setInterval(timer, 1000);
 })
