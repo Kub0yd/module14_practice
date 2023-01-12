@@ -2,6 +2,7 @@
 const hours = document.querySelector('.timer_hours');
 const minuts = document.querySelector('.timer_minutes');
 const seconds = document.querySelector('.timer_seconds');
+const price = document.querySelector('.price');
 
 let cookiesObj = {};                                            //создаем пустой объект для будущих данных куки
 let cookies = document.cookie.split(/;/);                       //разделяем строку с полученными из документа куки и добавляем в массив
@@ -11,7 +12,8 @@ for (let i = 0, lenght = cookies.length; i < lenght; i++){
 }
 const discountTime  = parseInt(cookiesObj.session_start) + 86400000;
 
-document.addEventListener('DOMContentLoaded', function() {
+if (document.querySelector('.timer')){
+    document.addEventListener('DOMContentLoaded', function() {
     function timer() {
         const deadline = discountTime - Date.now();
         let hour = Math.floor(deadline / 1000 / 60 / 60);
@@ -24,9 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(second);
         
     }
-
-    
     timer();
-    
     timerId = setInterval(timer, 1000);
 })
+}
+
+
+price.innerHTML = '<s>'+price.innerHTML+'</s>' +"45445";

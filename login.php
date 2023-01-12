@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  $auth = $_SESSION['auth'] ?? null;
+  if ($auth) {
+    header("Location: ./index.php");
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,11 +34,29 @@
   </body>
 </html>
 <?php 
+include 'service.php';
+
 if (isset($_POST['submit'])) {
-  if ($_POST['login'] == "Test") {
-    header("Location: ./index.php");
+  // echo ($_POST['login']);
+  $login = $_POST['login'];
+  if (existsUser($_POST['login'])) {
+    if (checkPassword($_POST['login'], $_POST['password'])) {
+    //  file_get_contents($adress, false, stream_context_create($submitOpt));
+    // Стартуем сессию:
+
+        
+    // Пишем в сессию информацию о том, что мы авторизовались:
+      $_SESSION['auth'] = true; 
+      // Пишем в сессию логин и id пользователя
+      $_SESSION['login'] = $login;
+      setcookie('test', 1);
+      header("Location: ./index.php");
+    }else {
+      echo "<script>alert(\"Неккоректный пароль\");</script>";
+    }
   }else{
-    echo '<p>ОШибка</p>';
+    echo "<script>alert(\"Неверный логин!\");</script>";
   }
 }
+
 ?>

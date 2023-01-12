@@ -4,32 +4,20 @@
 // }
 
 include 'service.php';
-$username = $_POST['login'] ?? null;
-$password = $_POST['password'] ?? null;
-
-
-if (null !== $username || null !== $password) {
-
-    // Если пароль из базы совпадает с паролем из формы
-    if (checkPassword($username, $password)) {
-    
-         // Стартуем сессию:
-         session_start(); 
-        
-   	 // Пишем в сессию информацию о том, что мы авторизовались:
-        $_SESSION['auth'] = true; 
-        // Пишем в сессию логин и id пользователя
-        $_SESSION['id'] = $users['admin']['id']; 
-        $_SESSION['login'] = $username;
-        //выставляем время первого входа на сайт
-        if (!isset($_COOKIE['session_start'])){
-          setcookie('session_start', intVal(microtime(true)*1000),time()+100000);
-        }
-        
+  session_start();
+// echo "$username + $password";
+  $auth = $_SESSION['auth'] ?? null;
+if ($auth) {
+  if (!isset($_COOKIE['session_start'])){
+    setcookie('session_start', intVal(microtime(true)*1000),time()+100000);
     }
 }
-$auth = $_SESSION['auth'] ?? null;
 
+if(isset($_POST['exit'])) {
+  
+  unset($_SESSION['auth']);
+  header('Location: ./index.php');
+}
 
 ?>
 <!DOCTYPE html>
@@ -45,36 +33,42 @@ $auth = $_SESSION['auth'] ?? null;
   </head>
   <body>
     <main>
-    <?php
-        if($auth){
+    <section class="main">
+       <?php
+        if(!$auth){
       ?>
-
-      <form method="post" action="./index.php">
-        <input type="submit" name="exit" label="Выйти"></input>
-      </form>
+      <a href="./login.php" class="login-in">Log In</a>
       
+      <?php   
+        } else {
+      ?>
+      <div class="login-menu">
+        <p class="login-name">Вы вошили как: <?php echo $_SESSION['login'];?></p>
+        <form class="login-form" method="post">
+          <input class="login-exit" type="submit" name="exit" value="Выйти"></input>
+        </form>
+      </div>
       <?php   
         }
       ?>
-    <section class="main">
       <img src="./images/main.png">
     </section>
     <section class="discount">
-      <img src="./images/discount_pic.png">
       <?php
         if(!$auth){
       ?>
-
+      <img class="discount-img" src="./images/discount_pic.png">
       <a href="./login.php" class="login-now">Войти сейчас</a>
       
       <?php   
         }
       ?>
       <?php
-        if($auth){
+        if($auth && $_COOKIE['session_start'] < time()){
     ?>
     <div class="timer">
-      <p>Специалльное предложение действует:</p>
+      <h3>Спасибо, что выбрали нас!</h3>
+      <p>Успейте воспользоваться специальным предложением для новых пользователей:</p>
       <div class="timer_items">
         <div class="timer_item timer_hours">00</div>
         <div class="timer_item timer_minutes">00</div>
@@ -117,6 +111,3 @@ $auth = $_SESSION['auth'] ?? null;
 </html>
 
 <?php
-if(isset($_POST['exit'])) {
-  session_unset();
-}

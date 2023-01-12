@@ -11,7 +11,7 @@ function getUsersList() {
 function existsUser($login) {
     $userSet = false;
     foreach (array_keys(getUsersList()) as $value) {
-        if ($value === $login) {
+        if ($value === trim($login)) {
             $userSet = true;
             break;  
         }
@@ -21,7 +21,7 @@ function existsUser($login) {
 // true тогда, когда существует пользователь с указанным логином и введенный им пароль прошел проверку
 function checkPassword($login, $password) {
     $users =  getUsersList();
-    return strval($password) === $users[strval($login)]['password'];
+    return strval(trim($password)) === $users[strval(trim($login))]['password'];
  };
  //возвращает либо имя вошедшего на сайт пользователя, либо null.
 function getCurrentUser() {
