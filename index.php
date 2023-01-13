@@ -64,17 +64,21 @@ if(isset($_POST['exit'])) {
         }
       ?>
       <?php
-        if($auth && $_COOKIE['session_start'] < time()){
+
+        if($auth && $_COOKIE['session_start'] < intVal(microtime(true)*1000)){
     ?>
     <div class="timer">
-      <h3>Спасибо, что выбрали нас!</h3>
-      <p>Успейте воспользоваться специальным предложением для новых пользователей:</p>
-      <div class="timer_items">
-        <div class="timer_item timer_hours">00</div>
-        <div class="timer_item timer_minutes">00</div>
-        <div class="timer_item timer_seconds">00</div>
-      </div>
+      <div class = "timer_items_wrapper">
+        <h3>Спасибо, что выбрали нас!</h3>
+        <p>Успейте воспользоваться специальным предложением для новых пользователей:</p>
+        <div class="timer_items">
+          <div class="timer_item timer_hours">00</div>
+          <div class="timer_item timer_minutes">00</div>
+          <div class="timer_item timer_seconds">00</div>
+        </div>
     </div>
+      </div>
+      
     <?php   
         }
     ?>

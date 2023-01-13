@@ -54,16 +54,30 @@ html {
  }
  /* Таймер */
  .timer {
-    position: relative;
-    /* top: -200px; */
-    left: 20px;
-    z-index: 1;
+  position: relative;
+  /* top: -200px; */
+  text-align: center;
+  z-index: 1;
+   
+ }
+ .timer_items_wrapper{
+  position: relative;
+  width: 600px;
+  left: 27%;
+  padding: 10px;
+  background: #e8dcca;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  font-size: 15px;
  }
  .timer_items {
-  display: flex;
+  display: inline-block;
   font-size: 48px;
+  text-align: center;
 }
  .timer_item {
+  float: left;
   position: relative;
   min-width: 60px;
   margin-left: 10px;
@@ -98,7 +112,6 @@ html {
   z-index: 1;
   top: 80px;
   left: 50%;
-  font-weight: bold;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 1px;
   font-size: 15px;

@@ -2,8 +2,9 @@
 //возвращает список пользователей
 function getUsersList() {
     $users = [
-        'admin' => ['id' => '1', 'password' => '132432'],
-        'test' => ['id' => '2', 'password' => '123'],
+        'admin' => ['id' => '1', 'password' => md5('132432')],
+        'test' => ['id' => '2', 'password' => md5('123')],
+        'Kub' => ['id' => '3', 'password' => md5('321')],
     ];
    return $users;
 }
