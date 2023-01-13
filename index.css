@@ -55,18 +55,20 @@ html {
  /* Таймер */
  .timer {
   position: relative;
-  /* top: -200px; */
   text-align: center;
   z-index: 1;
+  display: inline-block;
+  background: #e8dcca;
+  border-radius: 10px;
+  left: 50px;
    
  }
  .timer_items_wrapper{
   position: relative;
+  float: left;
   width: 600px;
-  left: 27%;
   padding: 10px;
-  background: #e8dcca;
-  border-radius: 10px;
+
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 1px;
   font-size: 15px;
@@ -75,6 +77,8 @@ html {
   display: inline-block;
   font-size: 48px;
   text-align: center;
+  top: 50px;
+  position: relative;
 }
  .timer_item {
   float: left;
@@ -87,6 +91,16 @@ html {
 }
 .timer_item:nth-child(-n+2)::after {
   content: ":";
+}
+.special-anounce_wrapper {
+  float: left;
+  width: 600px;
+}
+.special-img {
+  width: 50%;
+  height: 50%;
+  margin-bottom: 10px;
+  border: solid #328963 10px;
 }
 /* Услуги */
 .services {
@@ -160,4 +174,55 @@ html {
   .login-in:hover{
     box-shadow: inset 0 -60px 0 #40382D, 2px 2px 3px rgba(0, 0, 0, 0.3);
     color: #e8dcca;
+}
+/* Modal window */
+.modal-bd-wrapper {
+  position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center; /* см. ниже */
+    align-items: center;
+    z-index: 99;
+    padding:30px 0;
+    background: rgb(151, 151, 151, 0.7);
+
+   
+}
+.modal-bd {
+  background: #e8dcca;
+  width: 1000px;
+  max-width: 100%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 15px;
+
+}
+.modal-bd, .modal-close, .modal-input{
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  font-size: 40px;
+
+}
+.bd{
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-image: url("./images/conf2.gif");
+  background-color: black;
+
+
+}
+.bd-text-wrapper{
+
+}
+.bd-text-wrapper h2{
+  color: white
 }

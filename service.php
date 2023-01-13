@@ -29,3 +29,7 @@ function getCurrentUser() {
     return $_SESSION['login'];
 };
 
+function getUserId($login) {
+    $users = getUsersList();
+    return $users[$login]['id'];
+}

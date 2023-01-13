@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
   // echo ($_POST['login']);
   $login = $_POST['login'];
   if (existsUser($_POST['login'])) {
-    if (checkPassword($_POST['login'], $_POST['password'])) {
+    if (checkPassword($_POST['login'], md5($_POST['password']))) {
     //  file_get_contents($adress, false, stream_context_create($submitOpt));
     // Стартуем сессию:
 
@@ -49,7 +49,6 @@ if (isset($_POST['submit'])) {
       $_SESSION['auth'] = true; 
       // Пишем в сессию логин и id пользователя
       $_SESSION['login'] = $login;
-      setcookie('test', 1);
       header("Location: ./index.php");
     }else {
       echo "<script>alert(\"Неккоректный пароль\");</script>";

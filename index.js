@@ -1,4 +1,5 @@
-
+const modalButton = document.querySelector('.modal-close');
+const modalWindow = document.querySelector(".modal-bd-wrapper");
 const hours = document.querySelector('.timer_hours');
 const minuts = document.querySelector('.timer_minutes');
 const seconds = document.querySelector('.timer_seconds');
@@ -14,7 +15,9 @@ for (let i = 0, lenght = cookies.length; i < lenght; i++){
     cookiesObj[cookie[0]] = cookie[1];                          //добавляем ключ и значение в cookiesObj
     
 }
-const discountTime  = parseInt(cookiesObj.session_start) + 86400000;
+let currentSession = 'session_start_ID'+cookiesObj.currentID;
+
+const discountTime  = parseInt(cookiesObj[currentSession]) + 86400000;
 
 if (document.querySelector('.timer')){
     document.addEventListener('DOMContentLoaded', function() {
@@ -42,5 +45,8 @@ if (document.querySelector('.timer')){
 })
 }
 
+modalButton.addEventListener('click',  () => {
+    modalWindow.style.display = 'none';
+})
 
 // price.innerHTML = '<s>'+price.innerHTML+'</s>' +"45445";
