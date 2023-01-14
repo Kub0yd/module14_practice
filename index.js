@@ -45,8 +45,8 @@ if (document.querySelector('.timer')){
 })
 }
 
-modalButton.addEventListener('click',  () => {
-    modalWindow.style.display = 'none';
-})
+// modalButton.addEventListener('click',  () => {
+//     modalWindow.style.display = 'none';
+// })
 
 // price.innerHTML = '<s>'+price.innerHTML+'</s>' +"45445";

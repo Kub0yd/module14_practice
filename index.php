@@ -5,30 +5,43 @@
 
 include 'service.php';
   session_start();
-  $auth = $_SESSION['auth'] ?? null;
+  $auth = $_SESSION['auth'] ?? null;                //переменная для отметки авторизованного пользователя
 if ($auth) {
-  $userId = getUserId($_SESSION['login']);
-  $cookieSessionText = 'session_start_ID'.$userId;
+  $userId = getUserId($_SESSION['login']);          //переменная для хранения id пользователя (вызов из service.php)
+  $cookieSessionText = 'session_start_ID'.$userId;  //название сессии конкретного пользователя
   if (!isset($_COOKIE[$cookieSessionText])){
+    //устанавливаем куки с названием сессии конкретного пользователя
     setcookie($cookieSessionText, intVal(microtime(true)*1000),time()+100000);
     }
   if(!isset($_COOKIE['currentID'])){
+    //храню куки с id пользователя для обработки js скриптом
+    //это нужно для вывода разных таймеров для разных пользователей (не придумал как можно по-другому сделать)
     setcookie('currentID', $userId, time() + 100000, "/");
   }
-
-  $count = $_SESSION['entries'] ?? 0;
+  //подсчет кол-ва заходов в кабинет
+  $countSession = 'entries_'.$_SESSION['login'];    //переменная для названия сессии, содержащая логин пользователя 
+  $count = $_SESSION[$countSession] ?? 0;
   $count++;
-  $_SESSION['entries'] = $count;
+  $_SESSION[$countSession] = $count;
 
 }
 
-if(isset($_POST['exit'])) {
+if(isset($_POST['exit'])) {                           //если нажата кнопка Выход
   
-  unset($_SESSION['auth']);
-  setcookie("currentID", "", time() - 100000,"/");
-  header('Location: ./index.php');
+  unset($_SESSION['auth']);                           //очищаем пометку логина
+  setcookie("currentID", "", time() - 100000,"/");    //очищаем id
+  header('Location: ./index.php');                    //возврат на страницу
 }
 
+if (isset($_POST["bd_submit"])) {
+  $clientBd = $_SESSION['login'].'_bd';
+  $_SESSION[$clientBd] = $_POST['bd_set'];
+}
+echo $_SESSION[$clientBd];
+echo '\n';
+echo $_SESSION[$countSession];
+//echo var_dump($_POST['bd_submit']);
+echo var_dump(date('d-m', strtotime($_SESSION[$clientBd])));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,16 +141,24 @@ if(isset($_POST['exit'])) {
       <img src="./images/spa_pic.png">
     </section>
     </main>
+    <?php 
+      if ($_SESSION[$countSession] == 25) {
+    ?>
     <div class="modal-bd-wrapper">
       <div class="modal-bd">
-        <h3>Для получения специальных скидок введите дату своего рождения:</h3>
-        <input class="modal-input" type="date"></input>
-        <button class="modal-close" type="submit">Отправить</button>
+        <form method="post" type="submit">
+          <h3>Для получения специальных скидок введите дату своего рождения:</h3>
+          <input class="modal-input" type="date" name="bd_set"></input>
+         <button class="modal-close" type="submit" name="bd_submit">Отправить</button>
+        </form>
       </div>
-
     </div>
+    <?php 
+      }
+    ?>
   <script src="./index.js"></script>
   </body>
 </html>
 
 <?php
+ 
