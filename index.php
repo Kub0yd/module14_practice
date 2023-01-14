@@ -94,7 +94,7 @@ if(isset($_POST['exit'])) {
       </div>
       <div class="special-anounce_wrapper">
           <div class="special-anounce">
-            <h3>Оздоровительные процедуры со скидкой 30%!</h3>
+            <p>Оздоровительные процедуры со скидкой 30%!</p>
             <img class="special-img" src="./images/v.jpg">
           </div>
       </div>

@@ -95,6 +95,11 @@ html {
 .special-anounce_wrapper {
   float: left;
   width: 600px;
+  font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    font-size: 1em !important; 
+    font-weight: bold;
+
 }
 .special-img {
   width: 50%;
@@ -120,6 +125,7 @@ html {
   padding: 10px;
   border: solid black 1px;
   background: #e8dcca;
+  font-family: 'Montserrat', sans-serif;
 }
 .login-menu {
   position: relative;
