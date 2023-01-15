@@ -19,7 +19,7 @@ let currentSession = 'session_start_ID'+cookiesObj.currentID;
 
 const discountTime  = parseInt(cookiesObj[currentSession]) + 86400000;
 
-if (document.querySelector('.timer')){
+if (document.querySelector('.bd-text-wrapper')){
     document.addEventListener('DOMContentLoaded', function() {
     function timer() {
         const deadline = discountTime - Date.now();

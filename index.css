@@ -36,6 +36,7 @@ html {
     z-index: 1;
     position: relative;
     top: -200px;
+    margin: 1px;
 
  }
   /* .login-menu {
@@ -130,8 +131,8 @@ html {
 .login-menu {
   position: relative;
   z-index: 1;
-  top: 80px;
-  left: 50%;
+  top: 100px;
+  left: 45%;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 1px;
   font-size: 15px;

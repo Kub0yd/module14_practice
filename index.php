@@ -37,11 +37,22 @@ if (isset($_POST["bd_submit"])) {
   $clientBd = $_SESSION['login'].'_bd';
   $_SESSION[$clientBd] = $_POST['bd_set'];
 }
-echo $_SESSION[$clientBd];
-echo '\n';
-echo $_SESSION[$countSession];
+if (isset($_SESSION[$clientBd])) {
+  $birthday = $_SESSION[$clientBd];
+
+  $bd = explode('-', $birthday);
+  $bd = mktime(0, 0, 0, $bd[1], $bd[2], date('Y') + ($bd[1].$bd[2] <= date('md')));
+  $days_until = ceil(($bd - time()) / 86400);
+}
+
+
+//echo "Дней:  $days_until////";
+
+// echo $_SESSION[$clientBd];
+// echo '\n';
+// echo $_SESSION[$countSession];
 //echo var_dump($_POST['bd_submit']);
-echo var_dump(date('d-m', strtotime($_SESSION[$clientBd])));
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,11 +67,17 @@ echo var_dump(date('d-m', strtotime($_SESSION[$clientBd])));
   </head>
   <body>
     <main>
+      <?php 
+        if(isset($_SESSION[$clientBd]) && $days_until == 365) {
+      ?>
     <section class="bd">
       <div class="bd-text-wrapper">
         <h2>Поздравляем с Днём Рождения! И дарим скидку на все услуги 5%!</h2>
       </div>
     </section>  
+      <?php
+        }
+      ?>
     <section class="main">
        <?php
         if(!$auth){
@@ -75,10 +92,15 @@ echo var_dump(date('d-m', strtotime($_SESSION[$clientBd])));
         <form class="login-form" method="post">
           <input class="login-exit" type="submit" name="exit" value="Выйти"></input>
         </form>
-      </div>
-      <?php   
-        }
+      <?php
+          if ($auth && $days_until < 365){
       ?>
+      <p class="bd_until">Дней до дня рождения: <?php echo$days_until?></p>
+      <?php 
+       }  
+      }
+      ?>
+      </div>
       <img src="./images/main.png">
     </section>
     <section class="discount">
@@ -142,7 +164,7 @@ echo var_dump(date('d-m', strtotime($_SESSION[$clientBd])));
     </section>
     </main>
     <?php 
-      if ($_SESSION[$countSession] == 25) {
+      if ($_SESSION[$countSession] == 11) {
     ?>
     <div class="modal-bd-wrapper">
       <div class="modal-bd">
