@@ -166,7 +166,7 @@ if (isset($_SESSION[$clientBd])) {                    //проверяем, со
 
     <?php 
       //при повторном входе в ЛК выводим плашку с полем ввода даты рождения
-      if (!isset($_POST["bd_submit"]) && $_SESSION[$countSession] == 2) {
+      if (!isset($_SESSION[$clientBd]) && $_SESSION[$countSession] == 2) {
     ?>
 
     <div class="modal-bd-wrapper">
