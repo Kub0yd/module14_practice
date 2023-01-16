@@ -19,7 +19,7 @@ let currentSession = 'session_start_ID'+cookiesObj.currentID;
 
 const discountTime  = parseInt(cookiesObj[currentSession]) + 86400000;
 
-if (document.querySelector('.bd-text-wrapper')){
+if (document.querySelector('.timer')){
     document.addEventListener('DOMContentLoaded', function() {
     function timer() {
         const deadline = discountTime - Date.now();
@@ -33,20 +33,14 @@ if (document.querySelector('.bd-text-wrapper')){
     }
     timer();
     timerId = setInterval(timer, 1000);
-    
-    style.innerHTML = ".service h3::before {content: '-50% '; color: red}";
-    price.forEach ((e) => {
-        //console.log(e.innerText)
-        let elemPrice = parseInt(e.innerText.replace('$',""));
-        e.innerHTML = '<s>'+e.innerHTML+'</s>' +" "+ elemPrice *0.5+"$";
-    })
-        
 
 })
 }
-
-// modalButton.addEventListener('click',  () => {
-//     modalWindow.style.display = 'none';
-// })
-
-// price.innerHTML = '<s>'+price.innerHTML+'</s>' +"45445";
+if (document.querySelector('.bd')) {
+    style.innerHTML = ".service h3::before {content: '-5% '; color: red}";
+    price.forEach ((e) => {
+        //console.log(e.innerText)
+        let elemPrice = parseInt(e.innerText.replace('$',""));
+        e.innerHTML = '<s>'+e.innerHTML+'</s>' +" "+ Math.floor(elemPrice *0.95)+"$";
+    })
+}

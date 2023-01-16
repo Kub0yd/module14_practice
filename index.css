@@ -228,7 +228,8 @@ html {
 
 }
 .bd-text-wrapper{
-
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
 }
 .bd-text-wrapper h2{
   color: white

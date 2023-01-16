@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
 #bg {
-  /* background-image: url('img/background.jpg'); */
+  background-image: url('./images/spa_pic_bg.png');
   position: fixed;
   left: 0;
   top: 0;

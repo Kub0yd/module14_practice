@@ -1,14 +1,11 @@
 <?php
-// if ($auth){
-//   
-// }
 
 include 'service.php';
   session_start();
-  $auth = $_SESSION['auth'] ?? null;                //переменная для отметки авторизованного пользователя
+  $auth = $_SESSION['auth'] ?? null;                 //переменная для отметки авторизованного пользователя
 if ($auth) {
-  $userId = getUserId($_SESSION['login']);          //переменная для хранения id пользователя (вызов из service.php)
-  $cookieSessionText = 'session_start_ID'.$userId;  //название сессии конкретного пользователя
+  $userId = getUserId($_SESSION['login']);           //переменная для хранения id пользователя (вызов из service.php)
+  $cookieSessionText = 'session_start_ID'.$userId;   //название сессии конкретного пользователя
   if (!isset($_COOKIE[$cookieSessionText])){
     //устанавливаем куки с названием сессии конкретного пользователя
     setcookie($cookieSessionText, intVal(microtime(true)*1000),time()+100000);
@@ -18,40 +15,28 @@ if ($auth) {
     //это нужно для вывода разных таймеров для разных пользователей (не придумал как можно по-другому сделать)
     setcookie('currentID', $userId, time() + 100000, "/");
   }
-  //подсчет кол-ва заходов в кабинет
-  $countSession = 'entries_'.$_SESSION['login'];    //переменная для названия сессии, содержащая логин пользователя 
-  $count = $_SESSION[$countSession] ?? 0;
-  $count++;
-  $_SESSION[$countSession] = $count;
+  $countSession = 'entries_'.$_SESSION['login'];      //название для сессии учета входов
+  $clientBd = $_SESSION['login'].'_bd';               //создаем название сессии конкретного пользователя для хранения даты рождения
 
 }
-
+//очистка сессий и куки
 if(isset($_POST['exit'])) {                           //если нажата кнопка Выход
-  
   unset($_SESSION['auth']);                           //очищаем пометку логина
   setcookie("currentID", "", time() - 100000,"/");    //очищаем id
   header('Location: ./index.php');                    //возврат на страницу
 }
-
-if (isset($_POST["bd_submit"])) {
-  $clientBd = $_SESSION['login'].'_bd';
-  $_SESSION[$clientBd] = $_POST['bd_set'];
+//создаем сессию со значением даты рождения
+if (isset($_POST["bd_submit"])) {                     //получаем дату рождения из формы
+  $_SESSION[$clientBd] = $_POST['bd_set'];            //присваем сессии дату рождения
 }
-if (isset($_SESSION[$clientBd])) {
-  $birthday = $_SESSION[$clientBd];
-
-  $bd = explode('-', $birthday);
+//подсчет дней до дня рождения
+if (isset($_SESSION[$clientBd])) {                    //проверяем, создана ли запись дня рождения
+  $birthday = $_SESSION[$clientBd];                   //переменная для хранения значения даты рождения
+  $bd = explode('-', $birthday);                      //разбиваем строку на элементы массива
+  //получаем метку даты рождения
   $bd = mktime(0, 0, 0, $bd[1], $bd[2], date('Y') + ($bd[1].$bd[2] <= date('md')));
-  $days_until = ceil(($bd - time()) / 86400);
-}
-
-
-//echo "Дней:  $days_until////";
-
-// echo $_SESSION[$clientBd];
-// echo '\n';
-// echo $_SESSION[$countSession];
-//echo var_dump($_POST['bd_submit']);
+  $days_until = ceil(($bd - time()) / 86400);         //подсчет дней
+} 
 
 ?>
 <!DOCTYPE html>
@@ -59,64 +44,77 @@ if (isset($_SESSION[$clientBd])) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- <?php echo "<link rel='stylesheet' href='./index.css'>"; ?> -->
     <link rel="stylesheet" href="./index.css" />
     <link rel="icon" href="./images/icon.png" type="image/png">
     <title>Grand SPA Traditonal</title>
   </head>
   <body>
     <main>
+
       <?php 
+        // вывод сообщения с поздравлением, если день рождения совпадает с текущей датой
         if(isset($_SESSION[$clientBd]) && $days_until == 365) {
       ?>
+
     <section class="bd">
       <div class="bd-text-wrapper">
         <h2>Поздравляем с Днём Рождения! И дарим скидку на все услуги 5%!</h2>
       </div>
     </section>  
+
       <?php
         }
       ?>
+
     <section class="main">
+
        <?php
+       //если пользователь не авторизирован выводим ссылку для входа
         if(!$auth){
       ?>
+
       <a href="./login.php" class="login-in">Log In</a>
       
-      <?php   
+      <?php 
+      //если пользователь авторизирован выводим его имя и кнопку с возможностью выхода  
         } else {
       ?>
+
       <div class="login-menu">
         <p class="login-name">Вы вошили как: <?php echo $_SESSION['login'];?></p>
         <form class="login-form" method="post">
           <input class="login-exit" type="submit" name="exit" value="Выйти"></input>
         </form>
+
       <?php
-          if ($auth && $days_until < 365){
+        }
+          //выводим сколько дней до дня рождения
+          if ($auth && isset($_SESSION[$clientBd]) && $days_until < 365 && $_SESSION[$countSession] > 1){
       ?>
-      <p class="bd_until">Дней до дня рождения: <?php echo$days_until?></p>
-      <?php 
-       }  
+
+        <p class="bd_until">Дней до дня рождения: <?php echo$days_until?></p>
+
+      <?php   
       }
       ?>
+
       </div>
       <img src="./images/main.png">
     </section>
     <section class="discount">
       <?php
+        //если пользователь не авторизирован выводим плашку с объявленияем акций и дополнительную кнопку входа
         if(!$auth){
       ?>
       <img class="discount-img" src="./images/discount_pic.png">
       <a href="./login.php" class="login-now">Войти сейчас</a>
       
-      <?php   
-        }
-      ?>
       <?php
-
+        }
+        //выводим таймер для новых пользователей
         if($auth && $_COOKIE['session_start'] < intVal(microtime(true)*1000)){
-    ?>
+      ?>
+
     <div class="timer">
       <div class = "timer_items_wrapper">
         <h3>Спасибо, что выбрали нас!</h3>
@@ -134,9 +132,11 @@ if (isset($_SESSION[$clientBd])) {
           </div>
       </div>
     </div>
+
     <?php   
         }
     ?>
+
     </section>
     <section class="services_wrapper">
       <div class="services">
@@ -163,9 +163,12 @@ if (isset($_SESSION[$clientBd])) {
       <img src="./images/spa_pic.png">
     </section>
     </main>
+
     <?php 
-      if ($_SESSION[$countSession] == 11) {
+      //при повторном входе в ЛК выводим плашку с полем ввода даты рождения
+      if (!isset($_POST["bd_submit"]) && $_SESSION[$countSession] == 2) {
     ?>
+
     <div class="modal-bd-wrapper">
       <div class="modal-bd">
         <form method="post" type="submit">

@@ -1,6 +1,7 @@
 <?php
   session_start();
   $auth = $_SESSION['auth'] ?? null;
+  //если пользователь авторизован его перкидывает на главную страницу
   if ($auth) {
     header("Location: ./index.php");
   }
@@ -10,11 +11,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <?php echo "<link rel='stylesheet' href='./style.css'>"; ?>
-    <!-- <link rel="stylesheet" href="./index.css" /> -->
+    <?php echo "<link rel='stylesheet' href='./login.css'>"; ?>
     <title>&#x1F34C;login</title>
   </head>
-
   <body>
     <div id="bg"></div>
     <form role="form"  autocomplete="off" method="POST">
@@ -28,27 +27,27 @@
         <button class="btn" type="submit" name="submit">Log in</button>
       </div>
     </form>
-
-
-    <script src="./index.js"></script>
   </body>
 </html>
 <?php 
 include 'service.php';
 
+//обработка submit
 if (isset($_POST['submit'])) {
-  // echo ($_POST['login']);
-  $login = $_POST['login'];
-  if (existsUser($_POST['login'])) {
-    if (checkPassword($_POST['login'], md5($_POST['password']))) {
-    //  file_get_contents($adress, false, stream_context_create($submitOpt));
-    // Стартуем сессию:
-
-        
-    // Пишем в сессию информацию о том, что мы авторизовались:
+  $login = $_POST['login'];                                             //записываем в переменную логи
+  // проверям, существует ли пользователь с введенным логином (проверка из service.php)
+  if (existsUser($login)) {
+    //проверка пароля
+    if (checkPassword($login, md5($_POST['password']))) {
+      // Пишем в сессию информацию о том, что мы авторизовались:
       $_SESSION['auth'] = true; 
       // Пишем в сессию логин и id пользователя
       $_SESSION['login'] = $login;
+      //подсчет кол-ва заходов в кабинет
+      $countSession = 'entries_'.$login;    //переменная для названия сессии, содержащая логин пользователя 
+      $count = $_SESSION[$countSession] ?? 0;
+      $count++;
+      $_SESSION[$countSession] = $count;
       header("Location: ./index.php");
     }else {
       echo "<script>alert(\"Неккоректный пароль\");</script>";

@@ -5,6 +5,7 @@ function getUsersList() {
         'admin' => ['id' => '1', 'password' => md5('132432')],
         'test' => ['id' => '2', 'password' => md5('123')],
         'Kub' => ['id' => '3', 'password' => md5('321')],
+        'user' => ['id' => '4', 'password' => md5('1337')],
     ];
    return $users;
 }
@@ -28,7 +29,7 @@ function checkPassword($login, $password) {
 function getCurrentUser() {
     return $_SESSION['login'];
 };
-
+//получаем id пользователя
 function getUserId($login) {
     $users = getUsersList();
     return $users[$login]['id'];
